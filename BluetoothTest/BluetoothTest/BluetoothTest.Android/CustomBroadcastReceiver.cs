@@ -27,8 +27,13 @@ namespace BluetoothTest.Droid
             {
                 // Получаем объект BluetoothDevice из интента
                 BluetoothDevice device = intent.GetParcelableExtra(BluetoothDevice.ExtraDevice) as BluetoothDevice;
-                //Добавляем имя и адрес в array adapter, чтобы показвать в ListView
-                BleClass.bluetoothDevices.Add(new BleDevice(device.Address, device.Name));
+                var bDevice = new BleDevice(device.Address, device.Name);
+                //Проверяем, содержится ли уже устройство в листе
+                if (!BleClass.bluetoothDevices.Contains(bDevice))
+                {
+                    //Добавляем имя и адрес в array adapter, чтобы показвать в ListView
+                    BleClass.bluetoothDevices.Add(bDevice);
+                }
             }
         }       
     }
