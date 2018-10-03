@@ -9,13 +9,23 @@ using System.Collections.ObjectModel;
 
 namespace BluetoothTest
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage, IMainPage
     {
+        /// <summary>
+        /// Потихоньку надо перевести это в MVVM
+        /// </summary>
+
+        public ListView List => list;
+
+
         IBluetooth bluetooth;
 
         public MainPage()
         {
             InitializeComponent();
+
+            var a = list.Resources;
+
             bluetooth = App.Bluetooth;
             list.ItemsSource = bluetooth.BondedDevices;
             listDevices.ItemsSource = bluetooth.AvailibleDevices; ;
@@ -52,7 +62,6 @@ namespace BluetoothTest
         {
             delThis.IsVisible = true;
             listDevices.IsVisible = true;
-
             bluetooth.Find();
         }
     }
