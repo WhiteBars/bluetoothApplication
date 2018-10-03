@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace BluetoothTest.ViewModel
+namespace BluetoothTest
 {
     class WorkPageViewModel
     {

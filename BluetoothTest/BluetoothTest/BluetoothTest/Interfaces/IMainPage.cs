@@ -9,5 +9,6 @@ namespace BluetoothTest
     {
         //Возможно нужно что-то еще
         ListView List { get; }
+        INavigation PageNavigation { get; }
     }
 }

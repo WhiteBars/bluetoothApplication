@@ -16,7 +16,8 @@ namespace BluetoothTest
 		{
 			InitializeComponent();
             Bluetooth = bluetooth;
-			MainPage = new MainPage();
+            //MainPage = new MainPage();
+            MainPage = new WorkPage();
 		}
 
 		protected override void OnStart ()
@@ -28,7 +29,7 @@ namespace BluetoothTest
 		protected override void OnSleep ()
 		{
             // Handle when your app sleeps
-            Bluetooth.Disconnect();
+            //Bluetooth.Disconnect();
 		}
 
 		protected override void OnResume ()

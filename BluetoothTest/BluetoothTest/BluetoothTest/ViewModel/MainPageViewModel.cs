@@ -14,6 +14,7 @@ namespace BluetoothTest
         public ListView DevicesList { get; set; }
 
         readonly IBluetooth bluetooth;
+        readonly INavigation navigaton;
 
         public ICommand SearchDevices { get; private set; }
 
@@ -22,6 +23,7 @@ namespace BluetoothTest
             bluetooth = App.Bluetooth;
             AvailableDevices = bluetooth.AvailibleDevices;
             SearchDevices = new Command(() => bluetooth.Find());
+            navigaton = mainPageInfo.PageNavigation;
             DevicesList = mainPageInfo.List;
             DevicesList.ItemsSource = AvailableDevices;
             DevicesList.ItemSelected += DevicesList_ItemSelected;
