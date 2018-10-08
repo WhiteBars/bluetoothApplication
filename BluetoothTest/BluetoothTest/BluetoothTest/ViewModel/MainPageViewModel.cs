@@ -16,13 +16,13 @@ namespace BluetoothTest
         readonly IBluetooth bluetooth;
         readonly INavigation navigaton;
 
-        public ICommand SearchDevices { get; private set; }
+        public ICommand SearchDevicesCommand { get; set; }
 
         public MainPageViewModel(IMainPage mainPageInfo)
         {
             bluetooth = App.Bluetooth;
             AvailableDevices = bluetooth.AvailibleDevices;
-            SearchDevices = new Command(() => bluetooth.Find());
+            SearchDevicesCommand = new Command(() => bluetooth.Find());
             navigaton = mainPageInfo.PageNavigation;
             DevicesList = mainPageInfo.List;
             DevicesList.ItemsSource = AvailableDevices;

@@ -23,14 +23,11 @@ namespace BluetoothTest
             InitializeComponent();
             BindingContext = new MainPageViewModel(this);            
             //var a = list.Resources;
-
-
             //bluetooth = App.Bluetooth;
             //list.ItemsSource = bluetooth.BondedDevices;
             //listDevices.ItemsSource = bluetooth.AvailibleDevices; ;
             //label.Text = "♠ HELLO COMRADE!!! ♠";
             //testList.ItemsSource = bluetooth.RecievingData;
-
             //search.Clicked += Search_Clicked;
             //list.ItemTapped += List_ItemTapped;
             //listDevices.ItemTapped += List_ItemTapped;

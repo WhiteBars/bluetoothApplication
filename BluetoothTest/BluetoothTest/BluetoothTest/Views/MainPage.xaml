@@ -5,11 +5,6 @@
              x:Class="BluetoothTest.MainPage">
 
     <StackLayout>
-        <Label x:Name="label" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="Large"/>
-        <Label x:Name="testLabel" HorizontalOptions="Center" FontSize="Large"/>
-        <ListView x:Name="testList" HorizontalOptions="Center">
-            
-        </ListView>
         <Label Text="Сопряженные устройства" FontSize="Medium" />
         <ListView x:Name="list" HorizontalOptions="Center">
             <ListView.ItemTemplate>
@@ -23,7 +18,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label x:Name="delThis" Text="Найденные устройства" FontSize="Medium" IsVisible="False"/>
+        <Label Text="Найденные устройства:" FontSize="Medium" IsVisible="False"/>
         <ListView x:Name="listDevices" HorizontalOptions="Center" IsVisible="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -36,7 +31,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="search" Text="Найти устройства" FontSize="Medium"/>
-        <Button x:Name="bttn" Text="Отправить код"/>
+        <Button x:Name="search" Text="Найти устройства" FontSize="Medium" Command="{Binding SearchDevicesCommand}"/>
     </StackLayout>
 </ContentPage>

@@ -24,6 +24,7 @@ namespace BluetoothTest
             RecievingData = workPageInfo.List;
             RecievingData.ItemsSource = bluetooth.RecievingData;
 
+            //Пока не робит
             recievingDataThread = new Thread(new ThreadStart(bluetooth.RecieveData));
         }
 
