@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BluetoothTest.WorkPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:BluetoothTest.Views;assembly:BluetoothTest.Views"
+            x:Class="BluetoothTest.WorkPage">
   <!--Pages can be added as references or inline-->
-  <ContentPage Title="Команды" />
-  <ContentPage Title="Логи" />
-</TabbedPage>
+    <StackLayout>
+        <Button Text="Запуск установки"
+                Margin="5" Command="{Binding StartRigCommand}"/>
+        <Button Text="Запуск двигателя"
+                Margin="5" Command="{Binding StartPumpCommand}"/>
+        <Button Text="Включить охлаждение"
+                Margin="5" Command="{Binding StartFanCommand}"/>
+        <Button Text="Отключить установку"
+                Margin="5" Command="{Binding StopRigCommand}"/>
+    </StackLayout>
+</ContentPage>

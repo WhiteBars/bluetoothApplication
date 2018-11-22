@@ -50,7 +50,7 @@ namespace BluetoothTest.Droid
         {
             MainActivity = main;
             bluetoothDevices = new ObservableCollection<BleDevice>();
-            RecievingData = new ObservableCollection<string>() { "TEST" };
+            RecievingData = new ObservableCollection<string>() { "ThreadIsStarted" };
             bluetooth = BluetoothAdapter.DefaultAdapter;
             GetPaired();
         }

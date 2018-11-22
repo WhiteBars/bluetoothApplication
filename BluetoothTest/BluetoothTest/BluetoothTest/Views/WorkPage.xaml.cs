@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace BluetoothTest
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class WorkPage : TabbedPage, IWorkPage
+    public partial class WorkPage : ContentPage, IWorkPage
     {
         public ListView List => throw new NotImplementedException();
 

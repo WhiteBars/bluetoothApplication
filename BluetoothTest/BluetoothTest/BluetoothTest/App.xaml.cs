@@ -10,14 +10,14 @@ namespace BluetoothTest
         /// <summary>
         /// Èםעונפויס הכÿ נאבמעû ס bluetooth
         /// </summary>
+
         public static IBluetooth Bluetooth { get; private set; }
 
 		public App (IBluetooth bluetooth)
 		{
 			InitializeComponent();
             Bluetooth = bluetooth;
-            //MainPage = new MainPage();
-            MainPage = new WorkPage();
+            MainPage = new MainPage();
 		}
 
 		protected override void OnStart ()

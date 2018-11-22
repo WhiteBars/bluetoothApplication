@@ -38,7 +38,10 @@ namespace BluetoothTest
             if (res)
             {
                 bluetooth.Connect(device.Address);
-            }            
+            }
+            //Переадресация на другую страницу
+            await navigaton.PushAsync(new WorkPage());
+            navigaton.RemovePage(new MainPage());
         }
     }
 }
