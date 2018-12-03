@@ -35,10 +35,8 @@ namespace BluetoothTest
             var device = e.SelectedItem as BleDevice;
             var res = await Application.Current.MainPage.DisplayAlert("Подключение", "Подключиться к этому устройству?",
                 "Да", "Нет");
-            if (res)
-            {
-                bluetooth.Connect(device.Address);
-            }
+            if (!res) return;
+            bluetooth.Connect(device.Address);
             //Переадресация на другую страницу
             await navigaton.PushAsync(new WorkPage());
             navigaton.RemovePage(new MainPage());

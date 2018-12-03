@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Bluetooth;
 using Android.Bluetooth.LE;
@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using Java.IO;
 using Java.Lang.Reflect;
+using Plugin.SimpleAudioPlayer;
 using Xamarin.Forms.Internals;
 
 namespace BluetoothTest.Droid
@@ -53,6 +54,15 @@ namespace BluetoothTest.Droid
             RecievingData = new ObservableCollection<string>() { "ThreadIsStarted" };
             bluetooth = BluetoothAdapter.DefaultAdapter;
             GetPaired();
+        }
+        /// <summary>
+        /// Проигрывает звук предупреждения
+        /// </summary>
+        public async Task PlaySound()
+        {
+            var player = CrossSimpleAudioPlayer.Current;
+            player.Load("warning.mp3");
+            player.Play();
         }
         /// <summary>
         /// Получает список сопряженных устройств 

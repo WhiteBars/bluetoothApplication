@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -39,14 +40,14 @@ namespace BluetoothTest
 
         private void StartSnifThread()
         {
-            var thread = new Thread(e =>
+            var thread = new Thread(async e =>
             {
                 recievingDataThread.Start();
                 while (bluetooth.IsConnected)
                 {
-                    var data = bluetooth.RecievingData[bluetooth.RecievingData.Count];
+                    var data = bluetooth.RecievingData[bluetooth.RecievingData.Count - 1];
                     if (data == "33")
-                        recievingDataThread.Abort();
+                        await bluetooth.PlaySound();
                 }
             });
         }
@@ -76,11 +77,8 @@ namespace BluetoothTest
         {
             if (bluetooth.IsConnected)
                 bluetooth.SendData(55);
-            else
-                Application
-                    .Current
-                    .MainPage
-                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
+            else Application.Current.MainPage
+                 .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
         }
 
         private void OnStopRig()
@@ -89,11 +87,8 @@ namespace BluetoothTest
             {
                 bluetooth.SendData(56);
             }
-            else
-                Application
-                    .Current
-                    .MainPage
-                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
+            else Application.Current.MainPage
+                 .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
         }
     }
 }
