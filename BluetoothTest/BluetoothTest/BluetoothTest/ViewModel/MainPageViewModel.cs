@@ -10,6 +10,7 @@ namespace BluetoothTest
 {
     class MainPageViewModel
     {
+        public ObservableCollection<BleDevice> BoundedDevices { get; private set; }
         public ObservableCollection<BleDevice> AvailableDevices { get; private set; }
         public ListView DevicesList { get; set; }
 
@@ -21,11 +22,11 @@ namespace BluetoothTest
         public MainPageViewModel(IMainPage mainPageInfo)
         {
             bluetooth = App.Bluetooth;
-            AvailableDevices = bluetooth.AvailibleDevices;
+            BoundedDevices = bluetooth.BondedDevices;
             SearchDevicesCommand = new Command(() => bluetooth.Find());
             navigaton = mainPageInfo.PageNavigation;
             DevicesList = mainPageInfo.List;
-            DevicesList.ItemsSource = AvailableDevices;
+            DevicesList.ItemsSource = BoundedDevices;
             DevicesList.ItemSelected += DevicesList_ItemSelected;
         }
 

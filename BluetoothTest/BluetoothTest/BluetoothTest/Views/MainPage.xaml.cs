@@ -21,7 +21,10 @@ namespace BluetoothTest
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainPageViewModel(this);            
+            //list.ItemsSource = App.Bluetooth.BondedDevices;
+            //search.Clicked += (a,b) => App.Bluetooth.Find();
+            BindingContext = new MainPageViewModel(this);/*
+            list.ItemsSource = App.Bluetooth.AvailibleDevices;*/
             //var a = list.Resources;
             //bluetooth = App.Bluetooth;
             //list.ItemsSource = bluetooth.BondedDevices;

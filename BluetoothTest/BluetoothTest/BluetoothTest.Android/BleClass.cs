@@ -109,16 +109,15 @@ namespace BluetoothTest.Droid
                 //var method = device.Class.GetMethod("createSocket", new Java.Lang.Class[] { Java.Lang.Integer.Type });
                 //socket = method.Invoke(device, 1) as BluetoothSocket;  
                 socket = device.CreateInsecureRfcommSocketToServiceRecord(MainActivity.uuid);
-                Toast.MakeText(MainActivity.ApplicationContext, $"{socket.RemoteDevice}", ToastLength.Long).Show();
-
+                //Toast.MakeText(MainActivity.ApplicationContext, $"{socket.RemoteDevice}", ToastLength.Long).Show();
                 socket.Connect();
                 IsConnected = true;
-                Toast.MakeText(MainActivity.ApplicationContext, "ПОДКЛЮЧЕНО", ToastLength.Long).Show();
+                //Toast.MakeText(MainActivity.ApplicationContext, "ПОДКЛЮЧЕНО", ToastLength.Long).Show();
             }
             catch (Exception e)
             {
                 Log.Warning("Bluetooth", e.Message);
-                Toast.MakeText(MainActivity.ApplicationContext, $"ОШИБКА ПОДКЛЮЧЕНИЯ {e.Message}", ToastLength.Long).Show();
+                //Toast.MakeText(MainActivity.ApplicationContext, $"ОШИБКА ПОДКЛЮЧЕНИЯ {e.Message}", ToastLength.Long).Show();
             }
         }
         /// <summary>

@@ -18,8 +18,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label Text="Найденные устройства:" FontSize="Medium" IsVisible="False"/>
-        <ListView x:Name="listDevices" HorizontalOptions="Center" IsVisible="False">
+        <Label Text="Найденные устройства:" FontSize="Medium" IsVisible="True"/>
+        <ListView x:Name="listDevices" HorizontalOptions="Center" IsVisible="True" ItemsSource="{Binding AvailableDevices}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
