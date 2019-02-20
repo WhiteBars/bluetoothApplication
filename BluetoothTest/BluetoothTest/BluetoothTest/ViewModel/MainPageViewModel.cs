@@ -39,8 +39,8 @@ namespace BluetoothTest
             if (!res) return;
             bluetooth.Connect(device.Address);
             //Переадресация на другую страницу
-            await navigaton.PushAsync(new WorkPage());
-            navigaton.RemovePage(new MainPage());
+            await navigaton.PushModalAsync(new WorkPage());
+            //navigaton.RemovePage(new MainPage());
         }
     }
 }

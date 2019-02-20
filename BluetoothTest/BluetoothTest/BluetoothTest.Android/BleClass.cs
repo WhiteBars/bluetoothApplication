@@ -58,10 +58,10 @@ namespace BluetoothTest.Droid
         /// <summary>
         /// Проигрывает звук предупреждения
         /// </summary>
-        public async Task PlaySound()
+        public void PlaySound(string soundName)
         {
             var player = CrossSimpleAudioPlayer.Current;
-            player.Load("warning.mp3");
+            player.Load(soundName);
             player.Play();
         }
         /// <summary>
@@ -73,7 +73,8 @@ namespace BluetoothTest.Droid
             var bondedDevices = bluetooth.BondedDevices;
             if (bondedDevices.Count > 0)
             {
-                foreach (var e in bondedDevices) BondedDevices.Add(new BleDevice(e.Address, e.Name));
+                foreach (var e in bondedDevices)
+                    BondedDevices.Add(new BleDevice(e.Address, e.Name));
             }
         }
         /// <summary>
@@ -138,7 +139,6 @@ namespace BluetoothTest.Droid
                 Log.Warning("Bluetooth", e.Message);
                 Toast.MakeText(MainActivity.ApplicationContext, $"Ошибка при отправке данных. {e.Message}", ToastLength.Long).Show();
             }
-            Toast.MakeText(MainActivity.ApplicationContext, "Данные успешно отправлены", ToastLength.Long).Show();
         }
         //
         public void RecieveData()
@@ -148,6 +148,14 @@ namespace BluetoothTest.Droid
                 var inStream = socket.InputStream;
                 var bytes = BitConverter.GetBytes(1024);               
                 RecievingData.Add(inStream.ReadByte().ToString());
+                if (RecievingData[RecievingData.Count - 1] == "54")
+                {
+                    PlaySound("overheating.mp3");
+                }
+                if (RecievingData[RecievingData.Count - 1] == "33")
+                {
+                    PlaySound("warning.mp3");
+                }
             }
         }
         /// <summary>

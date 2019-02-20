@@ -17,7 +17,7 @@ namespace BluetoothTest
         /// <summary>
         /// Проигрывает звук предупреждения
         /// </summary>
-        Task PlaySound();
+        void PlaySound(string soundName);
         /// <summary>
         /// Разрывает соединение
         /// </summary>

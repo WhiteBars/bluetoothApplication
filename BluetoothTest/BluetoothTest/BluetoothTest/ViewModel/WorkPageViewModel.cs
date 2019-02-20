@@ -35,21 +35,7 @@ namespace BluetoothTest
             RecievingData.ItemsSource = bluetooth.RecievingData;
 
             recievingDataThread = new Thread(bluetooth.RecieveData);
-            StartSnifThread();
-        }
-
-        private void StartSnifThread()
-        {
-            var thread = new Thread(async e =>
-            {
-                recievingDataThread.Start();
-                while (bluetooth.IsConnected)
-                {
-                    var data = bluetooth.RecievingData[bluetooth.RecievingData.Count - 1];
-                    if (data == "33")
-                        await bluetooth.PlaySound();
-                }
-            });
+            recievingDataThread.Start();
         }
 
         private void OnStartRig()
@@ -59,7 +45,7 @@ namespace BluetoothTest
             else
                 Application.Current
                     .MainPage
-                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");            
+                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
         }
 
         private void OnStartPump()
@@ -85,7 +71,7 @@ namespace BluetoothTest
         {
             if (bluetooth.IsConnected)
             {
-                bluetooth.SendData(56);
+                bluetooth.SendData(52);
             }
             else Application.Current.MainPage
                  .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
