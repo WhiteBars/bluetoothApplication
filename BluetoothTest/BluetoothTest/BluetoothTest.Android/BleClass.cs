@@ -151,10 +151,12 @@ namespace BluetoothTest.Droid
                 if (RecievingData[RecievingData.Count - 1] == "54")
                 {
                     PlaySound("overheating.mp3");
+                    RecievingData[RecievingData.Count - 1] = "Перегрев установки!";
                 }
                 if (RecievingData[RecievingData.Count - 1] == "33")
                 {
-                    PlaySound("warning.mp3");
+                    PlaySound("alarmSound.mp3");
+                    RecievingData[RecievingData.Count - 1] = "Перегрев не устранен!\r\nДвигатель отключён";
                 }
             }
         }
