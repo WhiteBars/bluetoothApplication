@@ -10,22 +10,23 @@ namespace BluetoothTest
 {
     class MainPageViewModel
     {
+        public ObservableCollection<BleDevice> BoundedDevices { get; private set; }
         public ObservableCollection<BleDevice> AvailableDevices { get; private set; }
         public ListView DevicesList { get; set; }
 
         readonly IBluetooth bluetooth;
         readonly INavigation navigaton;
 
-        public ICommand SearchDevices { get; private set; }
+        public ICommand SearchDevicesCommand { get; set; }
 
         public MainPageViewModel(IMainPage mainPageInfo)
         {
             bluetooth = App.Bluetooth;
-            AvailableDevices = bluetooth.AvailibleDevices;
-            SearchDevices = new Command(() => bluetooth.Find());
+            BoundedDevices = bluetooth.BondedDevices;
+            SearchDevicesCommand = new Command(() => bluetooth.Find());
             navigaton = mainPageInfo.PageNavigation;
             DevicesList = mainPageInfo.List;
-            DevicesList.ItemsSource = AvailableDevices;
+            DevicesList.ItemsSource = BoundedDevices;
             DevicesList.ItemSelected += DevicesList_ItemSelected;
         }
 
@@ -35,10 +36,11 @@ namespace BluetoothTest
             var device = e.SelectedItem as BleDevice;
             var res = await Application.Current.MainPage.DisplayAlert("Подключение", "Подключиться к этому устройству?",
                 "Да", "Нет");
-            if (res)
-            {
-                bluetooth.Connect(device.Address);
-            }            
+            if (!res) return;
+            bluetooth.Connect(device.Address);
+            //Переадресация на другую страницу
+            await navigaton.PushModalAsync(new WorkPage());
+            //navigaton.RemovePage(new MainPage());
         }
     }
 }

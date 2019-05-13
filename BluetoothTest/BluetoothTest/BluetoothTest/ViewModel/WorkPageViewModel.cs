@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,29 +10,71 @@ namespace BluetoothTest
 {
     class WorkPageViewModel
     {
-        ListView RecievingData { get; set; }
+        private ListView RecievingData { get; set; }
 
-        public ICommand SendTestDataCommand { get; set; }
+        public ICommand StartRigCommand { get; set; }
 
-        IBluetooth bluetooth;
-        readonly Thread recievingDataThread;
+        public ICommand StartPumpCommand { get; set; }
+
+        public ICommand StartFanCommand { get; set; }
+
+        public ICommand StopRigCommand { get; set; }
+
+        private IBluetooth bluetooth;
+        private readonly Thread recievingDataThread;
 
         public WorkPageViewModel(IWorkPage workPageInfo)
         {
             bluetooth = App.Bluetooth;
-            SendTestDataCommand = new Command(SendTestData);
+            StartRigCommand = new Command(OnStartRig);
+            StartPumpCommand = new Command(OnStartPump);
+            StartFanCommand = new Command(OnStartFan);
+            StopRigCommand = new Command(OnStopRig);
 
             RecievingData = workPageInfo.List;
             RecievingData.ItemsSource = bluetooth.RecievingData;
 
-            recievingDataThread = new Thread(new ThreadStart(bluetooth.RecieveData));
+            recievingDataThread = new Thread(bluetooth.RecieveData);
+            recievingDataThread.Start();
         }
 
-        void SendTestData()
+        private void OnStartRig()
         {
-            //В качестве тестовых данных используется 55
-            if (bluetooth.IsConnected) bluetooth.SendData(55);
-            else Application.Current.MainPage.DisplayAlert("Алярма", "Нет подключенных устройств", "ОК");            
+            if (bluetooth.IsConnected)
+                bluetooth.SendData(53);
+            else
+                Application.Current
+                    .MainPage
+                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
+        }
+
+        private void OnStartPump()
+        {
+            if (bluetooth.IsConnected)
+                bluetooth.SendData(54);
+            else
+                Application
+                    .Current
+                    .MainPage
+                    .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
+        }
+
+        private void OnStartFan()
+        {
+            if (bluetooth.IsConnected)
+                bluetooth.SendData(55);
+            else Application.Current.MainPage
+                 .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
+        }
+
+        private void OnStopRig()
+        {
+            if (bluetooth.IsConnected)
+            {
+                bluetooth.SendData(52);
+            }
+            else Application.Current.MainPage
+                 .DisplayAlert("Ошибка!", "Нет подключенных устройств", "ОК");
         }
     }
 }

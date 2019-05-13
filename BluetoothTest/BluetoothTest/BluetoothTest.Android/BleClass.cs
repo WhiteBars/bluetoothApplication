@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Bluetooth;
 using Android.Bluetooth.LE;
@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using Java.IO;
 using Java.Lang.Reflect;
+using Plugin.SimpleAudioPlayer;
 using Xamarin.Forms.Internals;
 
 namespace BluetoothTest.Droid
@@ -50,9 +51,18 @@ namespace BluetoothTest.Droid
         {
             MainActivity = main;
             bluetoothDevices = new ObservableCollection<BleDevice>();
-            RecievingData = new ObservableCollection<string>() { "TEST" };
+            RecievingData = new ObservableCollection<string>() { "ThreadIsStarted" };
             bluetooth = BluetoothAdapter.DefaultAdapter;
             GetPaired();
+        }
+        /// <summary>
+        /// Проигрывает звук предупреждения
+        /// </summary>
+        public void PlaySound(string soundName)
+        {
+            var player = CrossSimpleAudioPlayer.Current;
+            player.Load(soundName);
+            player.Play();
         }
         /// <summary>
         /// Получает список сопряженных устройств 
@@ -63,7 +73,8 @@ namespace BluetoothTest.Droid
             var bondedDevices = bluetooth.BondedDevices;
             if (bondedDevices.Count > 0)
             {
-                foreach (var e in bondedDevices) BondedDevices.Add(new BleDevice(e.Address, e.Name));
+                foreach (var e in bondedDevices)
+                    BondedDevices.Add(new BleDevice(e.Address, e.Name));
             }
         }
         /// <summary>
@@ -99,16 +110,15 @@ namespace BluetoothTest.Droid
                 //var method = device.Class.GetMethod("createSocket", new Java.Lang.Class[] { Java.Lang.Integer.Type });
                 //socket = method.Invoke(device, 1) as BluetoothSocket;  
                 socket = device.CreateInsecureRfcommSocketToServiceRecord(MainActivity.uuid);
-                Toast.MakeText(MainActivity.ApplicationContext, $"{socket.RemoteDevice}", ToastLength.Long).Show();
-
+                //Toast.MakeText(MainActivity.ApplicationContext, $"{socket.RemoteDevice}", ToastLength.Long).Show();
                 socket.Connect();
                 IsConnected = true;
-                Toast.MakeText(MainActivity.ApplicationContext, "ПОДКЛЮЧЕНО", ToastLength.Long).Show();
+                //Toast.MakeText(MainActivity.ApplicationContext, "ПОДКЛЮЧЕНО", ToastLength.Long).Show();
             }
             catch (Exception e)
             {
                 Log.Warning("Bluetooth", e.Message);
-                Toast.MakeText(MainActivity.ApplicationContext, $"ОШИБКА ПОДКЛЮЧЕНИЯ {e.Message}", ToastLength.Long).Show();
+                //Toast.MakeText(MainActivity.ApplicationContext, $"ОШИБКА ПОДКЛЮЧЕНИЯ {e.Message}", ToastLength.Long).Show();
             }
         }
         /// <summary>
@@ -129,7 +139,6 @@ namespace BluetoothTest.Droid
                 Log.Warning("Bluetooth", e.Message);
                 Toast.MakeText(MainActivity.ApplicationContext, $"Ошибка при отправке данных. {e.Message}", ToastLength.Long).Show();
             }
-            Toast.MakeText(MainActivity.ApplicationContext, "Данные успешно отправлены", ToastLength.Long).Show();
         }
         //
         public void RecieveData()
@@ -139,6 +148,16 @@ namespace BluetoothTest.Droid
                 var inStream = socket.InputStream;
                 var bytes = BitConverter.GetBytes(1024);               
                 RecievingData.Add(inStream.ReadByte().ToString());
+                if (RecievingData[RecievingData.Count - 1] == "54")
+                {
+                    PlaySound("overheating.mp3");
+                    RecievingData[RecievingData.Count - 1] = "Перегрев установки!";
+                }
+                if (RecievingData[RecievingData.Count - 1] == "33")
+                {
+                    PlaySound("alarmSound.mp3");
+                    RecievingData[RecievingData.Count - 1] = "Перегрев не устранен!\r\nДвигатель отключён";
+                }
             }
         }
         /// <summary>
